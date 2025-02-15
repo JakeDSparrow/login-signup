@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import  {useNavigate} from "react-router-dom";
 import "./Loginsignup.css";
 
 import email_icon from "../assets/icons8-email-24.png";
@@ -8,6 +9,11 @@ import pw_icon from "../assets/icons8-password-30.png";
 
 const LoginSignup = () => {
   const [action, setAction] = useState("Login");
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate("/home"); // Redirect to homepage after login
+  };
 
   return (
     <div className="container">
@@ -38,19 +44,18 @@ const LoginSignup = () => {
       {action === "Login" && <div className="forgot-password"> <span>Forgot Password?</span> </div>}
 
       <div className="submit-container">
-        <div
-          className={action === "Login" ? "submit gray" : "submit"}
-          onClick={() => setAction("Signup")}
-        >
-          Sign Up
-        </div>
-        <div
-          className={action === "Signup" ? "submit gray" : "submit"}
-          onClick={() => setAction("Login")}
-        >
-          Login
-        </div>
-      </div>
+       {action === "Login" ? (
+          <>
+            <div className="submit" onClick={() => setAction("Signup")}>Go to Signup</div>
+            <div className="submit" onClick={handleLogin}>Login</div>
+          </>
+          ) : (
+          <>
+            <div className="submit" onClick={() => setAction("Login")}>Go to Login</div>
+            <div className="submit">Sign Up</div>
+          </>
+        )}
+    </div>
     </div>
   );
 };
